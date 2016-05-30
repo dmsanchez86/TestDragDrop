@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Carrito de Compras</title>
+	<link rel="stylesheet" href="estilo.css">
+	<script src="jquery/jquery-1.11.1.min.js"></script>
+	<script src="jquery/jquery-ui.js"></script>
+</head>
+<body>
+	<div id='contenido'>
+		<section id="estanteria">
+			<ul id="articulos">
+				<li id='camisa' style='background: url(images/camisa.jpg) no-repeat;' class='articulo'>
+					<h4>CAMISA</h4>
+					$<span class="precio">50000</span></span></br>
+					Existencia <b><span class="existencia">2</span></b>
+				</li> 
+				<li id='pantalon' style='background: url(images/pantalon.jpg) no-repeat;' class='articulo'>
+					<h4>PANTALON</h4>
+					$<span class="precio">60000</br>
+					Existencia <b><span class="existencia">15</span></b>
+				</li> 
+				<li id='gorra' style='background: url(images/gorra.jpg) no-repeat;' class='articulo'>
+					<h4>GORRA</h4>
+					$<span class="precio">15000</br>
+					Existencia <b><span class="existencia">18</span></b>
+				</li> 
+				<li id='zapatos' style='background: url(images/zapatos.jpg) no-repeat;' class='articulo'>
+					<h4>ZAPATOS</h4>
+					$<span class="precio">150000</br>
+					Existencia <b><span class="existencia">10</span></b>
+				</li> 
+				<li id='tenis' style='background: url(images/tenis.jpg) no-repeat;' class='articulo'>
+					<h4>TENIS</h4>
+					$<span class="precio">120000</br>
+					Existencia <b><span class="existencia">12</span></b>
+				</li> 
+				<li id='chaqueta' style='background: url(images/chaqueta.jpg) no-repeat;' class='articulo'>
+					<h4>CHAQUETA</h4>
+					$<span class="precio">180000</br>
+					Existencia <b><span class="existencia">6</span></b>
+				</li> 
+			<ul/>
+		</section>
+		<section id='carrito'></section>
+		<section id='total'>
+			Total $<span class="total">0</span>
+		</section>
+	</div>		
+	<script>
+		'use strict';
+
+		var total = 0;
+		var pf;
+
+		$(document).on('ready',function(){
+
+			// volvemos draggable el articulo
+			$('.articulo').draggable({
+				helper: 'clone'
+			});
+
+			// volvemos el carro droppable
+			$('#carrito').droppable({
+				drop: function(event, ui){
+					var element = ui.draggable;
+					var draggable = ui.draggable.attr("id");
+
+					// obtenemos el precio y la existencia del producto
+					var existencia = parseInt($(element).find('.existencia').text());
+					var precio = parseInt($(element).find('.precio').text());
+
+					if(existencia <= 0){
+						alert('There is not more items for this product');
+					}else{
+						// actualizamos el precio
+						total += precio;
+
+						// disminuimos la cantidad del producto
+						$(element).find('.existencia').text(existencia - 1);
+
+						var string = "<div class='articuloCar' ref='"+draggable+"'>";
+						string += "<b>"+draggable.toUpperCase()+ "</b> - $<span class='precio'>"+precio+"</span><span class='close'>x</span>"
+						string += "</div>";
+
+						// agregamos el articulo al carrito
+						$('#carrito').append(string);
+
+						// activamos el evento para eliminar un articulo del carro
+						$('.articuloCar .close').unbind().click(function(){
+							// precio del elemnto a eliminar
+							var price = parseInt($(this).parent().find('.precio').text());
+
+							// padre del elemento
+							var parent = $(this).parent();
+
+							// obtenemos la referencia para incrementar su existencia
+							var ref = parent.attr('ref');
+
+							var exis = parseInt($("#"+ref).find('.existencia').text());
+							exis++;
+							$("#"+ref).find('.existencia').text(exis);
+
+							// alert(price);
+							parent.slideUp(500);
+							total -= price;
+
+							// actualizamos el total
+							$('.total').text(total);
+
+							// borramos el elemento
+							setTimeout(function(){
+								parent.remove();
+							},500);
+						});
+					}
+
+					// mostramos el total
+					$('.total').text(total);
+				}
+			});
+		});
+	</script>
+</body>
+</html>

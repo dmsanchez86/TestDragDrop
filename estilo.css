@@ -1,0 +1,68 @@
+#articulos{
+	margin: 0 auto;
+	margin-top: 35px;
+	list-style: none;
+	width: 400px
+}
+
+#carrito{
+	background: olive url(images/carro.png) no-repeat center top;
+	border: 1px solid black;
+	color: black;
+	display: inline-block;
+	font-weight: bold;
+	height: 349px;
+	margin-left: 100px;
+	padding-left: 10px;
+	padding-top: 120px;
+	vertical-align: top;
+	font-size: 1.2em;
+	width: 250px;
+}
+
+#contenido{
+	margin: 20px auto;
+	width: 1000px;
+}
+
+#estanteria{
+	background: url(images/estanteria.jpg) no-repeat;
+	border: 1px solid black;
+	display: inline-block;
+	height: 469px;
+	vertical-align: top;
+	width: 500px;
+}
+
+#total{
+	background: #ff0000;
+	font-weight: bold;
+	margin: 20px auto;
+	text-align: center;
+	width: 300px;
+}
+
+.articulo{
+	color: red;
+	border: 1px solid black;
+	display: inline-block;
+	margin: 15px 40px;
+	height: 100px;
+	vertical-align: top;
+	width: 100px;	
+}
+.articulo:active, .articulo:hover{
+	cursor: move;
+}
+
+.articuloCar{
+	color: red;
+}
+.articuloCar .close{
+	cursor: pointer;
+	float: right;
+	margin-right: 1rem;
+	color: #323232;
+	font-weight: bold;
+	font-family: Helvetica;
+}
